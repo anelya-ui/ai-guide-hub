@@ -1,0 +1,187 @@
+---
+title: 'Мастерство TypeScript: Продвинутые типы и паттерны'
+description: 'Погрузитесь в продвинутые типы TypeScript, служебные типы и паттерны проектирования, которые повысят качество вашего кода.'
+date: '2024-11-10'
+coverImage: 'https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=1200&h=630&fit=crop'
+author: 'Анна Смирнова'
+tags: ['TypeScript', 'JavaScript', 'Программирование', 'Типы']
+categories: ['Обучение', 'TypeScript']
+published: true
+---
+
+## Introduction
+
+TypeScript's type system is incredibly powerful, going far beyond simple type annotations. In this guide, we'll explore advanced types and patterns that will make your code more robust and maintainable.
+
+## Utility Types
+
+TypeScript provides several built-in utility types that help transform types.
+
+### Partial and Required
+
+```typescript
+interface User {
+  id: number
+  name: string
+  email: string
+  age?: number
+}
+
+// Make all properties optional
+type PartialUser = Partial<User>
+
+// Make all properties required
+type RequiredUser = Required<User>
+```
+
+### Pick and Omit
+
+```typescript
+// Pick specific properties
+type UserPreview = Pick<User, 'id' | 'name'>
+
+// Omit specific properties
+type UserWithoutId = Omit<User, 'id'>
+```
+
+<Callout type="tip" title="Best Practice">
+Use `Pick` and `Omit` instead of duplicating interfaces when you need subsets of types.
+</Callout>
+
+## Conditional Types
+
+Conditional types allow you to create types based on conditions:
+
+```typescript
+type IsString<T> = T extends string ? true : false
+
+type A = IsString<string>  // true
+type B = IsString<number>  // false
+```
+
+### Practical Example
+
+```typescript
+type NonNullable<T> = T extends null | undefined ? never : T
+
+type Result = NonNullable<string | null | undefined>  // string
+```
+
+## Template Literal Types
+
+Create types based on string manipulation:
+
+```typescript
+type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
+type Endpoint = '/users' | '/posts' | '/comments'
+
+type APIRoute = `${HTTPMethod} ${Endpoint}`
+// Result: 'GET /users' | 'GET /posts' | 'POST /users' | etc.
+```
+
+<Callout type="info">
+Template literal types are perfect for creating type-safe API routes and event names!
+</Callout>
+
+## Mapped Types
+
+Transform existing types into new ones:
+
+```typescript
+type Readonly<T> = {
+  readonly [P in keyof T]: T[P]
+}
+
+type Nullable<T> = {
+  [P in keyof T]: T[P] | null
+}
+
+interface Product {
+  name: string
+  price: number
+}
+
+type ReadonlyProduct = Readonly<Product>
+type NullableProduct = Nullable<Product>
+```
+
+## Discriminated Unions
+
+Create type-safe state machines:
+
+```typescript
+type LoadingState = {
+  status: 'loading'
+}
+
+type SuccessState<T> = {
+  status: 'success'
+  data: T
+}
+
+type ErrorState = {
+  status: 'error'
+  error: string
+}
+
+type AsyncState<T> = LoadingState | SuccessState<T> | ErrorState
+
+function handleState(state: AsyncState<User>) {
+  switch (state.status) {
+    case 'loading':
+      return 'Loading...'
+    case 'success':
+      return `Welcome, ${state.data.name}!`
+    case 'error':
+      return `Error: ${state.error}`
+  }
+}
+```
+
+<Callout type="success">
+TypeScript's exhaustiveness checking ensures you handle all cases!
+</Callout>
+
+## Generic Constraints
+
+Constrain generic types for better type safety:
+
+```typescript
+interface HasId {
+  id: number
+}
+
+function getById<T extends HasId>(items: T[], id: number): T | undefined {
+  return items.find(item => item.id === id)
+}
+
+// ✅ Works
+getById([{ id: 1, name: 'Alice' }], 1)
+
+// ❌ Error: object doesn't have 'id'
+// getById([{ name: 'Bob' }], 1)
+```
+
+## Infer Keyword
+
+Extract types from other types:
+
+```typescript
+type ReturnType<T> = T extends (...args: any[]) => infer R ? R : never
+
+function getUser() {
+  return { id: 1, name: 'Alice' }
+}
+
+type User = ReturnType<typeof getUser>  // { id: number; name: string }
+```
+
+<Callout type="warning">
+The `infer` keyword is powerful but can make types harder to read. Use it judiciously!
+</Callout>
+
+## Conclusion
+
+TypeScript's advanced type system enables you to write safer, more expressive code. By mastering these patterns, you'll catch more bugs at compile-time and improve your development experience.
+
+Keep exploring and happy typing! 💙

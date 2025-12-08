@@ -1,0 +1,122 @@
+---
+title: 'Начало работы с Next.js 14: Полное руководство'
+description: 'Узнайте, как создавать современные веб-приложения с Next.js 14, включая новый App Router, Server Components и улучшенную производительность.'
+date: '2024-11-15'
+coverImage: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=1200&h=630&fit=crop'
+author: 'Алексей Иванов'
+tags: ['Next.js', 'React', 'JavaScript', 'Веб-разработка']
+categories: ['Обучение', 'Frontend']
+published: true
+---
+
+## Introduction
+
+Next.js 14 represents a significant leap forward in React-based web development. With revolutionary features like the App Router, Server Components, and enhanced performance optimizations, it's the perfect time to dive in.
+
+<Callout type="tip" title="Pro Tip">
+If you're upgrading from Next.js 13, make sure to check the official migration guide for breaking changes and new best practices.
+</Callout>
+
+## Key Features of Next.js 14
+
+### 1. App Router (Stable)
+
+The App Router is now stable and recommended for all new projects. It brings a new paradigm for building React applications with:
+
+- **Server Components** by default
+- **Layouts** for shared UI
+- **Loading States** with `loading.tsx`
+- **Error Handling** with `error.tsx`
+
+### 2. Server Actions
+
+Server Actions allow you to run server-side code directly from your components:
+
+```typescript
+'use server'
+
+export async function createPost(formData: FormData) {
+  const title = formData.get('title')
+  const content = formData.get('content')
+
+  // Save to database
+  await db.posts.create({
+    data: { title, content }
+  })
+
+  revalidatePath('/posts')
+}
+```
+
+<Callout type="info">
+Server Actions automatically handle request serialization and can be called from Client Components!
+</Callout>
+
+### 3. Improved Performance
+
+Next.js 14 comes with significant performance improvements:
+
+- **Faster Local Iterations**: Up to 53% faster local server startup
+- **Turbopack**: 5x faster than Webpack (beta)
+- **Optimized Bundling**: Smaller bundle sizes
+
+## Getting Started
+
+Let's create a new Next.js 14 project:
+
+```bash
+npx create-next-app@latest my-app --typescript --tailwind --app
+cd my-app
+npm run dev
+```
+
+This command will:
+1. Create a new Next.js project
+2. Set up TypeScript
+3. Configure TailwindCSS
+4. Use the new App Router
+
+<Callout type="warning" title="Node.js Version">
+Make sure you're using Node.js 18.17 or higher for the best experience.
+</Callout>
+
+## Project Structure
+
+Here's what your project structure should look like:
+
+```
+my-app/
+├── app/
+│   ├── layout.tsx      # Root layout
+│   ├── page.tsx        # Home page
+│   └── globals.css     # Global styles
+├── public/
+├── package.json
+└── next.config.js
+```
+
+## Creating Your First Page
+
+Create a new route by adding a `page.tsx` file:
+
+```typescript
+// app/about/page.tsx
+export default function AboutPage() {
+  return (
+    <div>
+      <h1>About Us</h1>
+      <p>Welcome to our Next.js 14 application!</p>
+    </div>
+  )
+}
+```
+
+<Callout type="success">
+That's it! Next.js automatically creates the route `/about` for you.
+</Callout>
+
+## Conclusion
+
+Next.js 14 is a powerful framework that makes building React applications easier and more performant. With features like Server Components, Server Actions, and the stable App Router, you have everything you need to build modern web applications.
+
+Happy coding! 🚀

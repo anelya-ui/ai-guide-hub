@@ -1,0 +1,208 @@
+---
+title: 'CSS Grid: Полное руководство по современным макетам'
+description: 'Освойте CSS Grid и создавайте сложные адаптивные макеты с лёгкостью. Изучите основы и продвинутые техники 2024 года.'
+date: '2024-11-01'
+coverImage: 'https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?w=1200&h=630&fit=crop'
+author: 'Елена Васильева'
+tags: ['CSS', 'Веб-дизайн', 'Frontend', 'Вёрстка']
+categories: ['Обучение', 'CSS']
+published: true
+---
+
+## What is CSS Grid?
+
+CSS Grid is a two-dimensional layout system that allows you to create complex layouts with rows and columns. Unlike Flexbox (which is one-dimensional), Grid excels at creating both rows AND columns simultaneously.
+
+<Callout type="info">
+CSS Grid is supported in all modern browsers since 2017!
+</Callout>
+
+## Basic Grid Container
+
+```css
+.container {
+  display: grid;
+  grid-template-columns: 200px 200px 200px;
+  grid-template-rows: 100px 100px;
+  gap: 20px;
+}
+```
+
+This creates a 3x2 grid with:
+- 3 columns of 200px each
+- 2 rows of 100px each
+- 20px gap between items
+
+## Fractional Units (fr)
+
+The `fr` unit represents a fraction of available space:
+
+```css
+.container {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+}
+```
+
+<Callout type="tip">
+`fr` units are responsive by nature - they automatically adapt to container size!
+</Callout>
+
+## The `repeat()` Function
+
+Create multiple tracks easily:
+
+```css
+/* Instead of: 1fr 1fr 1fr 1fr */
+grid-template-columns: repeat(4, 1fr);
+
+/* Mix values */
+grid-template-columns: 200px repeat(3, 1fr) 200px;
+```
+
+## Grid Areas
+
+Name your grid areas for semantic layouts:
+
+```css
+.container {
+  display: grid;
+  grid-template-areas:
+    "header header header"
+    "sidebar main main"
+    "footer footer footer";
+  grid-template-columns: 200px 1fr 1fr;
+  grid-template-rows: auto 1fr auto;
+}
+
+.header { grid-area: header; }
+.sidebar { grid-area: sidebar; }
+.main { grid-area: main; }
+.footer { grid-area: footer; }
+```
+
+<Callout type="success">
+Grid areas make your CSS more readable and easier to maintain!
+</Callout>
+
+## Responsive Grids with `auto-fit`
+
+```css
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+```
+
+This creates a responsive grid that:
+- Fits as many 250px columns as possible
+- Expands columns to fill remaining space
+- Automatically wraps to new rows
+
+<Callout type="warning">
+Use `auto-fit` (not `auto-fill`) if you want columns to expand when there's extra space.
+</Callout>
+
+## Alignment Properties
+
+### Align Items (vertical)
+
+```css
+.container {
+  align-items: start;    /* top */
+  align-items: center;   /* middle */
+  align-items: end;      /* bottom */
+  align-items: stretch;  /* default */
+}
+```
+
+### Justify Items (horizontal)
+
+```css
+.container {
+  justify-items: start;   /* left */
+  justify-items: center;  /* center */
+  justify-items: end;     /* right */
+  justify-items: stretch; /* default */
+}
+```
+
+## Placing Items
+
+Manually place items on the grid:
+
+```css
+.item {
+  grid-column: 1 / 3;  /* Span from column 1 to 3 */
+  grid-row: 1 / 2;     /* Span from row 1 to 2 */
+}
+
+/* Shorthand */
+.item {
+  grid-area: 1 / 1 / 2 / 3;
+  /* row-start / column-start / row-end / column-end */
+}
+```
+
+## Advanced Example: Card Layout
+
+```css
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.card {
+  display: grid;
+  grid-template-rows: 200px 1fr auto;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.card-image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.card-content {
+  padding: 1.5rem;
+}
+
+.card-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #eee;
+}
+```
+
+## Grid vs Flexbox
+
+When to use what?
+
+| Use Grid when... | Use Flexbox when... |
+|------------------|---------------------|
+| You need 2D layouts (rows AND columns) | You need 1D layouts (row OR column) |
+| You know the structure upfront | Content should determine layout |
+| Creating page layouts | Aligning items in a component |
+
+<Callout type="tip" title="Best Practice">
+Use Grid for page layout, Flexbox for component layout. They complement each other perfectly!
+</Callout>
+
+## Browser DevTools
+
+Modern browsers have excellent Grid debugging tools:
+
+1. Open DevTools (F12)
+2. Click the grid badge next to `display: grid`
+3. See grid lines, gaps, and areas overlaid on your page
+
+## Conclusion
+
+CSS Grid is a powerful tool for creating modern web layouts. With features like fractional units, grid areas, and auto-placement, you can build responsive designs that were previously impossible or required hacks.
+
+Start using Grid today and level up your CSS skills! 🎨

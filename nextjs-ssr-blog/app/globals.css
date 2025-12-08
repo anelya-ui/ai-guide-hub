@@ -1,0 +1,250 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 215 20.2% 65.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 38 92% 50%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 217 91% 60%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 38 92% 50%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 217 91% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom scrollbar */
+@layer utilities {
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-muted;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary/50;
+  }
+}
+
+/* Animations */
+@layer utilities {
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slide-up {
+    from {
+      transform: translateY(10px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeInOut {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes cosmicBlink {
+    0% {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    20% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    80% {
+      opacity: 0.4;
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.5s ease-in-out;
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.5s ease-out;
+  }
+
+  .animate-code-blink {
+    animation: fadeInOut 4s ease-in-out infinite;
+  }
+
+  .animate-cosmic-blink {
+    animation: cosmicBlink ease-in-out infinite;
+  }
+
+  @keyframes drawLine {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+/* Code blocks */
+@layer components {
+  .prose pre {
+    @apply bg-muted border border-border rounded-lg p-4 overflow-x-auto scrollbar-thin;
+  }
+
+  .prose code {
+    @apply text-sm bg-muted px-1 py-0.5 rounded;
+  }
+
+  .prose pre code {
+    @apply bg-transparent p-0;
+  }
+}
+
+/* Hero gradients */
+@layer components {
+  .bg-gradient-dark-hero {
+    background: linear-gradient(135deg, #0f0f23 0%, #1a1a3a 50%, #2d1b69 100%);
+  }
+
+  .bg-gradient-light-hero {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+  }
+}
+
+/* Section backgrounds */
+@layer components {
+  /* All sections transparent to show cosmic background */
+  .section-features {
+    background: transparent;
+  }
+
+  .section-popular {
+    background: transparent;
+  }
+
+  .section-calculator {
+    background: transparent;
+  }
+
+  .section-faq {
+    background: transparent;
+  }
+
+  .dark .section-features {
+    background: transparent;
+  }
+
+  .dark .section-popular {
+    background: transparent;
+  }
+
+  .dark .section-calculator {
+    background: transparent;
+  }
+
+  .dark .section-faq {
+    background: transparent;
+  }
+
+  /* Light theme cards */
+  .light-card {
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  }
+}
+
+/* Hero section - no wave transition needed with cosmic background */
+@layer components {
+  .hero-section {
+    position: relative;
+    overflow: visible;
+  }
+}
+
+/* Cosmic Space Background */
+@layer components {
+  .bg-space-dark {
+    background: radial-gradient(ellipse at center, #f8fafc 0%, #e8edf5 50%, #d4dde8 100%);
+  }
+
+  .dark .bg-space-dark {
+    background: radial-gradient(ellipse at center, #0a0a1a 0%, #050510 50%, #000000 100%);
+  }
+}

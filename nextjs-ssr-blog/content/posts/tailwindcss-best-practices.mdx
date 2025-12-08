@@ -1,0 +1,334 @@
+---
+title: 'TailwindCSS: Лучшие практики для production приложений'
+description: 'Узнайте, как эффективно использовать TailwindCSS в крупных приложениях с помощью проверенных паттернов и лучших практик.'
+date: '2024-10-20'
+coverImage: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200&h=630&fit=crop'
+author: 'Мария Соколова'
+tags: ['TailwindCSS', 'CSS', 'Веб-дизайн', 'Frontend']
+categories: ['Обучение', 'CSS']
+published: true
+---
+
+## Why TailwindCSS?
+
+TailwindCSS is a utility-first CSS framework that has revolutionized how we style web applications. Instead of writing custom CSS, you compose designs using utility classes.
+
+<Callout type="success">
+Tailwind's utility-first approach leads to smaller CSS bundles and faster development!
+</Callout>
+
+## Configuration
+
+Start with a solid `tailwind.config.ts`:
+
+```typescript
+import type { Config } from 'tailwindcss'
+
+const config: Config = {
+  content: [
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: '#eff6ff',
+          500: '#3b82f6',
+          900: '#1e3a8a',
+        },
+      },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+      },
+    },
+  },
+  plugins: [],
+}
+
+export default config
+```
+
+<Callout type="tip">
+Extend the theme, don't override it! This keeps all default utilities available.
+</Callout>
+
+## Component Patterns
+
+### Extract Components, Not Classes
+
+**❌ Don't do this:**
+
+```tsx
+// Repeating classes everywhere
+<button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+  Click me
+</button>
+```
+
+**✅ Do this instead:**
+
+```tsx
+// components/Button.tsx
+export function Button({ children, ...props }) {
+  return (
+    <button
+      className="px-4 py-2 bg-primary-500 text-white rounded hover:bg-primary-600 transition-colors"
+      {...props}
+    >
+      {children}
+    </button>
+  )
+}
+```
+
+## Using @apply Sparingly
+
+The `@apply` directive can be useful, but use it sparingly:
+
+```css
+/* Only for complex, repeated patterns */
+.btn {
+  @apply px-4 py-2 rounded font-semibold transition-colors;
+}
+
+.btn-primary {
+  @apply bg-primary-500 text-white hover:bg-primary-600;
+}
+```
+
+<Callout type="warning">
+Overusing `@apply` defeats the purpose of utility-first CSS. Prefer components!
+</Callout>
+
+## Responsive Design
+
+Tailwind's responsive utilities are incredibly powerful:
+
+```tsx
+<div className="
+  grid
+  grid-cols-1        // Mobile: 1 column
+  md:grid-cols-2     // Tablet: 2 columns
+  lg:grid-cols-3     // Desktop: 3 columns
+  gap-4 md:gap-6     // Responsive gap
+">
+  {/* Content */}
+</div>
+```
+
+### Mobile-First Approach
+
+```tsx
+<h1 className="
+  text-2xl     // Mobile base
+  md:text-4xl  // Tablet and up
+  lg:text-6xl  // Desktop and up
+">
+  Responsive Heading
+</h1>
+```
+
+## Dark Mode
+
+Enable dark mode in your config:
+
+```typescript
+// tailwind.config.ts
+export default {
+  darkMode: 'class', // or 'media'
+  // ...
+}
+```
+
+Then use dark mode variants:
+
+```tsx
+<div className="
+  bg-white dark:bg-gray-900
+  text-gray-900 dark:text-white
+  border border-gray-200 dark:border-gray-700
+">
+  Content adapts to theme!
+</div>
+```
+
+<Callout type="info">
+Use `class` strategy for manual theme switching, `media` for system preference.
+</Callout>
+
+## State Variants
+
+Style based on state:
+
+```tsx
+<button className="
+  bg-blue-500
+  hover:bg-blue-600
+  focus:ring-2 focus:ring-blue-300
+  active:bg-blue-700
+  disabled:opacity-50 disabled:cursor-not-allowed
+">
+  Interactive Button
+</button>
+```
+
+## Custom Utilities
+
+Add your own utilities when needed:
+
+```css
+/* globals.css */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+```
+
+## Arbitrary Values
+
+Use square brackets for one-off values:
+
+```tsx
+<div className="
+  top-[117px]
+  bg-[#1da1f2]
+  grid-cols-[200px_1fr_300px]
+">
+  Arbitrary values for unique cases
+</div>
+```
+
+<Callout type="warning">
+Use arbitrary values sparingly - they're best for truly unique cases.
+</Callout>
+
+## Performance Optimization
+
+### PurgeCSS (Built-in)
+
+Tailwind automatically removes unused styles in production:
+
+```typescript
+// tailwind.config.ts
+export default {
+  content: [
+    './src/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
+  // Tailwind will only include classes used in these files
+}
+```
+
+### JIT Mode
+
+Just-In-Time mode is enabled by default in Tailwind 3+:
+
+- Generate styles on-demand
+- Faster build times
+- Smaller development builds
+
+## Organization Tips
+
+### Group Related Utilities
+
+```tsx
+<div className={`
+  /* Layout */
+  flex items-center justify-between
+  /* Spacing */
+  px-4 py-2 gap-2
+  /* Appearance */
+  bg-white border border-gray-200 rounded-lg shadow-sm
+  /* Typography */
+  text-sm font-medium text-gray-900
+  /* Interactive */
+  hover:shadow-md transition-shadow
+`}>
+  Content
+</div>
+```
+
+### Use clsx or cn Helper
+
+```tsx
+import { clsx } from 'clsx'
+import { twMerge } from 'tailwind-merge'
+
+function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
+// Usage
+<button className={cn(
+  'px-4 py-2',
+  isActive && 'bg-blue-500',
+  isDisabled && 'opacity-50 cursor-not-allowed'
+)}>
+  Smart Button
+</button>
+```
+
+## Common Patterns
+
+### Card Component
+
+```tsx
+export function Card({ children, className, ...props }) {
+  return (
+    <div
+      className={cn(
+        'rounded-lg border bg-card text-card-foreground shadow-sm',
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </div>
+  )
+}
+```
+
+### Container
+
+```tsx
+<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+  {/* Centered, responsive container */}
+</div>
+```
+
+## Plugins
+
+Enhance Tailwind with official plugins:
+
+```bash
+npm install -D @tailwindcss/typography @tailwindcss/forms @tailwindcss/aspect-ratio
+```
+
+```typescript
+// tailwind.config.ts
+export default {
+  plugins: [
+    require('@tailwindcss/typography'),
+    require('@tailwindcss/forms'),
+  ],
+}
+```
+
+<Callout type="success">
+The Typography plugin is essential for styling MDX content!
+</Callout>
+
+## Conclusion
+
+TailwindCSS is powerful when used correctly. Focus on component extraction, use responsive utilities liberally, and don't fight the framework. Your CSS will be smaller and your development faster.
+
+Happy styling! 🎨

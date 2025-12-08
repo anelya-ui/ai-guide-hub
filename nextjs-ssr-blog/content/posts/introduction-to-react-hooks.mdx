@@ -1,0 +1,292 @@
+---
+title: 'Введение в React Hooks: useState, useEffect и другие'
+description: 'Изучите React Hooks с нуля и поймите, как они революционизировали разработку на React с помощью более чистого и переиспользуемого кода.'
+date: '2024-10-28'
+coverImage: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=1200&h=630&fit=crop'
+author: 'Дмитрий Петров'
+tags: ['React', 'JavaScript', 'Hooks', 'Frontend']
+categories: ['Обучение', 'React']
+published: true
+---
+
+## What Are React Hooks?
+
+Hooks are functions that let you "hook into" React features like state and lifecycle methods from function components. Before hooks, you needed class components for stateful logic.
+
+<Callout type="info">
+Hooks were introduced in React 16.8 (February 2019) and have since become the standard way to write React components.
+</Callout>
+
+## The Rules of Hooks
+
+Before we dive in, remember these two rules:
+
+1. **Only call hooks at the top level** - Don't call hooks inside loops, conditions, or nested functions
+2. **Only call hooks from React functions** - Call them from function components or custom hooks
+
+<Callout type="warning">
+Breaking these rules will cause bugs! ESLint has a plugin (`eslint-plugin-react-hooks`) to enforce them.
+</Callout>
+
+## useState: Managing State
+
+The most basic hook - adds state to function components:
+
+```typescript
+import { useState } from 'react'
+
+function Counter() {
+  const [count, setCount] = useState(0)
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>
+        Increment
+      </button>
+    </div>
+  )
+}
+```
+
+### Multiple State Variables
+
+```typescript
+function UserForm() {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [age, setAge] = useState(0)
+
+  return (
+    <form>
+      <input value={name} onChange={(e) => setName(e.target.value)} />
+      <input value={email} onChange={(e) => setEmail(e.target.value)} />
+      <input value={age} onChange={(e) => setAge(Number(e.target.value))} />
+    </form>
+  )
+}
+```
+
+## useEffect: Side Effects
+
+Perform side effects in function components:
+
+```typescript
+import { useState, useEffect } from 'react'
+
+function UserProfile({ userId }: { userId: number }) {
+  const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchUser() {
+      setLoading(true)
+      const response = await fetch(`/api/users/${userId}`)
+      const data = await response.json()
+      setUser(data)
+      setLoading(false)
+    }
+
+    fetchUser()
+  }, [userId]) // Re-run when userId changes
+
+  if (loading) return <div>Loading...</div>
+  return <div>{user?.name}</div>
+}
+```
+
+### Effect Cleanup
+
+Clean up subscriptions and timers:
+
+```typescript
+useEffect(() => {
+  const timer = setInterval(() => {
+    console.log('Tick')
+  }, 1000)
+
+  // Cleanup function
+  return () => clearInterval(timer)
+}, [])
+```
+
+<Callout type="tip">
+Always return a cleanup function from effects that set up subscriptions, timers, or event listeners!
+</Callout>
+
+## useContext: Consuming Context
+
+Access context values without nesting:
+
+```typescript
+import { createContext, useContext } from 'react'
+
+const ThemeContext = createContext('light')
+
+function ThemedButton() {
+  const theme = useContext(ThemeContext)
+
+  return (
+    <button className={theme === 'dark' ? 'btn-dark' : 'btn-light'}>
+      Click me
+    </button>
+  )
+}
+```
+
+## useRef: Persisting Values
+
+Create mutable refs that persist across renders:
+
+```typescript
+import { useRef, useEffect } from 'react'
+
+function TextInput() {
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    // Focus input on mount
+    inputRef.current?.focus()
+  }, [])
+
+  return <input ref={inputRef} />
+}
+```
+
+### Storing Previous Values
+
+```typescript
+function Counter() {
+  const [count, setCount] = useState(0)
+  const prevCountRef = useRef<number>()
+
+  useEffect(() => {
+    prevCountRef.current = count
+  })
+
+  const prevCount = prevCountRef.current
+
+  return (
+    <div>
+      <p>Current: {count}</p>
+      <p>Previous: {prevCount}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  )
+}
+```
+
+## useMemo: Memoizing Values
+
+Optimize expensive calculations:
+
+```typescript
+import { useMemo } from 'react'
+
+function ProductList({ products, filter }: Props) {
+  const filteredProducts = useMemo(() => {
+    console.log('Filtering products...')
+    return products.filter(p => p.category === filter)
+  }, [products, filter]) // Only recompute when these change
+
+  return (
+    <ul>
+      {filteredProducts.map(p => (
+        <li key={p.id}>{p.name}</li>
+      ))}
+    </ul>
+  )
+}
+```
+
+<Callout type="warning">
+Don't overuse `useMemo`! Only use it for expensive calculations. Premature optimization can make code harder to read.
+</Callout>
+
+## useCallback: Memoizing Functions
+
+Prevent unnecessary re-renders:
+
+```typescript
+import { useCallback } from 'react'
+
+function Parent() {
+  const [count, setCount] = useState(0)
+
+  const handleClick = useCallback(() => {
+    setCount(c => c + 1)
+  }, []) // Function never changes
+
+  return <Child onClick={handleClick} />
+}
+```
+
+## Custom Hooks
+
+Create your own hooks for reusable logic:
+
+```typescript
+function useLocalStorage<T>(key: string, initialValue: T) {
+  const [value, setValue] = useState<T>(() => {
+    const item = localStorage.getItem(key)
+    return item ? JSON.parse(item) : initialValue
+  })
+
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(value))
+  }, [key, value])
+
+  return [value, setValue] as const
+}
+
+// Usage
+function App() {
+  const [theme, setTheme] = useLocalStorage('theme', 'light')
+
+  return (
+    <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
+      Toggle Theme
+    </button>
+  )
+}
+```
+
+<Callout type="success">
+Custom hooks are the key to sharing logic between components. Name them with `use` prefix!
+</Callout>
+
+## Common Patterns
+
+### Fetching Data
+
+```typescript
+function useApi<T>(url: string) {
+  const [data, setData] = useState<T | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<Error | null>(null)
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(url)
+        const json = await response.json()
+        setData(json)
+      } catch (e) {
+        setError(e as Error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [url])
+
+  return { data, loading, error }
+}
+```
+
+## Conclusion
+
+React Hooks have transformed how we write React components. They enable cleaner code, better code reuse, and make it easier to understand component logic.
+
+Start using hooks in your projects today! 🎣
