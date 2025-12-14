@@ -9,15 +9,15 @@ categories: ['Обучение', 'CSS']
 published: true
 ---
 
-## What is CSS Grid?
+## Что такое CSS Grid?
 
-CSS Grid is a two-dimensional layout system that allows you to create complex layouts with rows and columns. Unlike Flexbox (which is one-dimensional), Grid excels at creating both rows AND columns simultaneously.
+CSS Grid — это двумерная система компоновки, которая позволяет создавать сложные макеты с рядами и столбцами. В отличие от Flexbox (который одномерный), Grid отлично справляется с созданием как рядов, ТАК И столбцов одновременно.
 
 <Callout type="info">
-CSS Grid is supported in all modern browsers since 2017!
+CSS Grid поддерживается во всех современных браузерах с 2017 года!
 </Callout>
 
-## Basic Grid Container
+## Базовый Grid контейнер
 
 ```css
 .container {
@@ -28,14 +28,14 @@ CSS Grid is supported in all modern browsers since 2017!
 }
 ```
 
-This creates a 3x2 grid with:
-- 3 columns of 200px each
-- 2 rows of 100px each
-- 20px gap between items
+Это создаёт сетку 3x2 с:
+- 3 столбца по 200px каждый
+- 2 ряда по 100px каждый
+- 20px промежуток между элементами
 
-## Fractional Units (fr)
+## Дробные единицы (fr)
 
-The `fr` unit represents a fraction of available space:
+Единица `fr` представляет собой долю доступного пространства:
 
 ```css
 .container {
@@ -45,24 +45,24 @@ The `fr` unit represents a fraction of available space:
 ```
 
 <Callout type="tip">
-`fr` units are responsive by nature - they automatically adapt to container size!
+Единицы `fr` по своей природе адаптивны - они автоматически подстраиваются под размер контейнера!
 </Callout>
 
-## The `repeat()` Function
+## Функция `repeat()`
 
-Create multiple tracks easily:
+Легко создавайте множественные дорожки:
 
 ```css
-/* Instead of: 1fr 1fr 1fr 1fr */
+/* Вместо: 1fr 1fr 1fr 1fr */
 grid-template-columns: repeat(4, 1fr);
 
-/* Mix values */
+/* Смешивание значений */
 grid-template-columns: 200px repeat(3, 1fr) 200px;
 ```
 
-## Grid Areas
+## Области Grid
 
-Name your grid areas for semantic layouts:
+Именуйте области grid для семантичных макетов:
 
 ```css
 .container {
@@ -82,10 +82,10 @@ Name your grid areas for semantic layouts:
 ```
 
 <Callout type="success">
-Grid areas make your CSS more readable and easier to maintain!
+Области Grid делают ваш CSS более читаемым и лёгким в поддержке!
 </Callout>
 
-## Responsive Grids with `auto-fit`
+## Адаптивные сетки с `auto-fit`
 
 ```css
 .gallery {
@@ -95,57 +95,57 @@ Grid areas make your CSS more readable and easier to maintain!
 }
 ```
 
-This creates a responsive grid that:
-- Fits as many 250px columns as possible
-- Expands columns to fill remaining space
-- Automatically wraps to new rows
+Это создаёт адаптивную сетку, которая:
+- Помещает столько столбцов по 250px, сколько возможно
+- Расширяет столбцы для заполнения оставшегося пространства
+- Автоматически переносит на новые ряды
 
 <Callout type="warning">
-Use `auto-fit` (not `auto-fill`) if you want columns to expand when there's extra space.
+Используйте `auto-fit` (а не `auto-fill`), если хотите, чтобы столбцы расширялись при наличии дополнительного пространства.
 </Callout>
 
-## Alignment Properties
+## Свойства выравнивания
 
-### Align Items (vertical)
-
-```css
-.container {
-  align-items: start;    /* top */
-  align-items: center;   /* middle */
-  align-items: end;      /* bottom */
-  align-items: stretch;  /* default */
-}
-```
-
-### Justify Items (horizontal)
+### Align Items (вертикальное)
 
 ```css
 .container {
-  justify-items: start;   /* left */
-  justify-items: center;  /* center */
-  justify-items: end;     /* right */
-  justify-items: stretch; /* default */
+  align-items: start;    /* сверху */
+  align-items: center;   /* по центру */
+  align-items: end;      /* снизу */
+  align-items: stretch;  /* по умолчанию */
 }
 ```
 
-## Placing Items
+### Justify Items (горизонтальное)
 
-Manually place items on the grid:
+```css
+.container {
+  justify-items: start;   /* слева */
+  justify-items: center;  /* по центру */
+  justify-items: end;     /* справа */
+  justify-items: stretch; /* по умолчанию */
+}
+```
+
+## Размещение элементов
+
+Вручную размещайте элементы на сетке:
 
 ```css
 .item {
-  grid-column: 1 / 3;  /* Span from column 1 to 3 */
-  grid-row: 1 / 2;     /* Span from row 1 to 2 */
+  grid-column: 1 / 3;  /* Занимает от столбца 1 до 3 */
+  grid-row: 1 / 2;     /* Занимает от ряда 1 до 2 */
 }
 
-/* Shorthand */
+/* Сокращённая запись */
 .item {
   grid-area: 1 / 1 / 2 / 3;
-  /* row-start / column-start / row-end / column-end */
+  /* начало-ряда / начало-столбца / конец-ряда / конец-столбца */
 }
 ```
 
-## Advanced Example: Card Layout
+## Продвинутый пример: Макет карточек
 
 ```css
 .card-grid {
@@ -181,28 +181,28 @@ Manually place items on the grid:
 
 ## Grid vs Flexbox
 
-When to use what?
+Когда что использовать?
 
-| Use Grid when... | Use Flexbox when... |
-|------------------|---------------------|
-| You need 2D layouts (rows AND columns) | You need 1D layouts (row OR column) |
-| You know the structure upfront | Content should determine layout |
-| Creating page layouts | Aligning items in a component |
+| Используйте Grid когда... | Используйте Flexbox когда... |
+|----------------------------|------------------------------|
+| Вам нужны 2D макеты (ряды И столбцы) | Вам нужны 1D макеты (ряд ИЛИ столбец) |
+| Вы знаете структуру заранее | Контент должен определять макет |
+| Создание макетов страниц | Выравнивание элементов в компоненте |
 
-<Callout type="tip" title="Best Practice">
-Use Grid for page layout, Flexbox for component layout. They complement each other perfectly!
+<Callout type="tip" title="Лучшая практика">
+Используйте Grid для макетов страниц, Flexbox для макетов компонентов. Они прекрасно дополняют друг друга!
 </Callout>
 
-## Browser DevTools
+## Инструменты разработчика в браузере
 
-Modern browsers have excellent Grid debugging tools:
+Современные браузеры имеют отличные инструменты отладки Grid:
 
-1. Open DevTools (F12)
-2. Click the grid badge next to `display: grid`
-3. See grid lines, gaps, and areas overlaid on your page
+1. Откройте DevTools (F12)
+2. Нажмите на значок grid рядом с `display: grid`
+3. Увидите линии сетки, промежутки и области, наложенные на вашу страницу
 
-## Conclusion
+## Заключение
 
-CSS Grid is a powerful tool for creating modern web layouts. With features like fractional units, grid areas, and auto-placement, you can build responsive designs that were previously impossible or required hacks.
+CSS Grid — это мощный инструмент для создания современных веб-макетов. С такими возможностями, как дробные единицы, области grid и автоматическое размещение, вы можете создавать адаптивные дизайны, которые ранее были невозможны или требовали хаков.
 
-Start using Grid today and level up your CSS skills! 🎨
+Начните использовать Grid сегодня и повысьте свои навыки CSS! 🎨

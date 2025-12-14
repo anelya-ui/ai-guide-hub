@@ -9,28 +9,28 @@ categories: ['Обучение', 'Frontend']
 published: true
 ---
 
-## Introduction
+## Введение
 
-Next.js 14 represents a significant leap forward in React-based web development. With revolutionary features like the App Router, Server Components, and enhanced performance optimizations, it's the perfect time to dive in.
+Next.js 14 представляет собой значительный скачок вперед в веб-разработке на основе React. С революционными функциями, такими как App Router, Server Components и улучшенная оптимизация производительности, сейчас самое время начать работу с этим фреймворком.
 
-<Callout type="tip" title="Pro Tip">
-If you're upgrading from Next.js 13, make sure to check the official migration guide for breaking changes and new best practices.
+<Callout type="tip" title="Совет профессионала">
+Если вы обновляетесь с Next.js 13, обязательно ознакомьтесь с официальным руководством по миграции для получения информации о критических изменениях и новых лучших практиках.
 </Callout>
 
-## Key Features of Next.js 14
+## Ключевые возможности Next.js 14
 
-### 1. App Router (Stable)
+### 1. App Router (Стабильная версия)
 
-The App Router is now stable and recommended for all new projects. It brings a new paradigm for building React applications with:
+App Router теперь стабилен и рекомендуется для всех новых проектов. Он привносит новую парадигму для создания React-приложений с:
 
-- **Server Components** by default
-- **Layouts** for shared UI
-- **Loading States** with `loading.tsx`
-- **Error Handling** with `error.tsx`
+- **Server Components** по умолчанию
+- **Layouts** для общего UI
+- **Состояния загрузки** с `loading.tsx`
+- **Обработка ошибок** с `error.tsx`
 
 ### 2. Server Actions
 
-Server Actions allow you to run server-side code directly from your components:
+Server Actions позволяют запускать серверный код напрямую из ваших компонентов:
 
 ```typescript
 'use server'
@@ -39,7 +39,7 @@ export async function createPost(formData: FormData) {
   const title = formData.get('title')
   const content = formData.get('content')
 
-  // Save to database
+  // Сохранение в базу данных
   await db.posts.create({
     data: { title, content }
   })
@@ -49,20 +49,20 @@ export async function createPost(formData: FormData) {
 ```
 
 <Callout type="info">
-Server Actions automatically handle request serialization and can be called from Client Components!
+Server Actions автоматически обрабатывают сериализацию запросов и могут быть вызваны из клиентских компонентов!
 </Callout>
 
-### 3. Improved Performance
+### 3. Улучшенная производительность
 
-Next.js 14 comes with significant performance improvements:
+Next.js 14 поставляется со значительными улучшениями производительности:
 
-- **Faster Local Iterations**: Up to 53% faster local server startup
-- **Turbopack**: 5x faster than Webpack (beta)
-- **Optimized Bundling**: Smaller bundle sizes
+- **Быстрые локальные итерации**: До 53% быстрее запуск локального сервера
+- **Turbopack**: В 5 раз быстрее, чем Webpack (бета)
+- **Оптимизированная сборка**: Меньший размер бандлов
 
-## Getting Started
+## Начало работы
 
-Let's create a new Next.js 14 project:
+Давайте создадим новый проект Next.js 14:
 
 ```bash
 npx create-next-app@latest my-app --typescript --tailwind --app
@@ -70,53 +70,53 @@ cd my-app
 npm run dev
 ```
 
-This command will:
-1. Create a new Next.js project
-2. Set up TypeScript
-3. Configure TailwindCSS
-4. Use the new App Router
+Эта команда выполнит следующее:
+1. Создаст новый проект Next.js
+2. Настроит TypeScript
+3. Сконфигурирует TailwindCSS
+4. Использует новый App Router
 
-<Callout type="warning" title="Node.js Version">
-Make sure you're using Node.js 18.17 or higher for the best experience.
+<Callout type="warning" title="Версия Node.js">
+Убедитесь, что вы используете Node.js 18.17 или выше для лучшего опыта работы.
 </Callout>
 
-## Project Structure
+## Структура проекта
 
-Here's what your project structure should look like:
+Вот как должна выглядеть структура вашего проекта:
 
 ```
 my-app/
 ├── app/
-│   ├── layout.tsx      # Root layout
-│   ├── page.tsx        # Home page
-│   └── globals.css     # Global styles
+│   ├── layout.tsx      # Корневой layout
+│   ├── page.tsx        # Главная страница
+│   └── globals.css     # Глобальные стили
 ├── public/
 ├── package.json
 └── next.config.js
 ```
 
-## Creating Your First Page
+## Создание первой страницы
 
-Create a new route by adding a `page.tsx` file:
+Создайте новый маршрут, добавив файл `page.tsx`:
 
 ```typescript
 // app/about/page.tsx
 export default function AboutPage() {
   return (
     <div>
-      <h1>About Us</h1>
-      <p>Welcome to our Next.js 14 application!</p>
+      <h1>О нас</h1>
+      <p>Добро пожаловать в наше приложение на Next.js 14!</p>
     </div>
   )
 }
 ```
 
 <Callout type="success">
-That's it! Next.js automatically creates the route `/about` for you.
+Вот и всё! Next.js автоматически создаст маршрут `/about` для вас.
 </Callout>
 
-## Conclusion
+## Заключение
 
-Next.js 14 is a powerful framework that makes building React applications easier and more performant. With features like Server Components, Server Actions, and the stable App Router, you have everything you need to build modern web applications.
+Next.js 14 — это мощный фреймворк, который делает создание React-приложений проще и производительнее. С такими функциями, как Server Components, Server Actions и стабильный App Router, у вас есть всё необходимое для создания современных веб-приложений.
 
-Happy coding! 🚀
+Удачного кодирования! 🚀

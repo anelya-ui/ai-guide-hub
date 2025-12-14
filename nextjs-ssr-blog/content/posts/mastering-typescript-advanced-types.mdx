@@ -9,15 +9,15 @@ categories: ['Обучение', 'TypeScript']
 published: true
 ---
 
-## Introduction
+## Введение
 
-TypeScript's type system is incredibly powerful, going far beyond simple type annotations. In this guide, we'll explore advanced types and patterns that will make your code more robust and maintainable.
+Система типов TypeScript невероятно мощная и выходит далеко за пределы простых аннотаций типов. В этом руководстве мы изучим продвинутые типы и паттерны, которые сделают ваш код более надёжным и поддерживаемым.
 
-## Utility Types
+## Служебные типы
 
-TypeScript provides several built-in utility types that help transform types.
+TypeScript предоставляет несколько встроенных служебных типов, которые помогают преобразовывать типы.
 
-### Partial and Required
+### Partial и Required
 
 ```typescript
 interface User {
@@ -27,30 +27,30 @@ interface User {
   age?: number
 }
 
-// Make all properties optional
+// Сделать все свойства необязательными
 type PartialUser = Partial<User>
 
-// Make all properties required
+// Сделать все свойства обязательными
 type RequiredUser = Required<User>
 ```
 
-### Pick and Omit
+### Pick и Omit
 
 ```typescript
-// Pick specific properties
+// Выбрать конкретные свойства
 type UserPreview = Pick<User, 'id' | 'name'>
 
-// Omit specific properties
+// Исключить конкретные свойства
 type UserWithoutId = Omit<User, 'id'>
 ```
 
-<Callout type="tip" title="Best Practice">
-Use `Pick` and `Omit` instead of duplicating interfaces when you need subsets of types.
+<Callout type="tip" title="Лучшая практика">
+Используйте `Pick` и `Omit` вместо дублирования интерфейсов, когда вам нужны подмножества типов.
 </Callout>
 
-## Conditional Types
+## Условные типы
 
-Conditional types allow you to create types based on conditions:
+Условные типы позволяют создавать типы на основе условий:
 
 ```typescript
 type IsString<T> = T extends string ? true : false
@@ -59,7 +59,7 @@ type A = IsString<string>  // true
 type B = IsString<number>  // false
 ```
 
-### Practical Example
+### Практический пример
 
 ```typescript
 type NonNullable<T> = T extends null | undefined ? never : T
@@ -67,25 +67,25 @@ type NonNullable<T> = T extends null | undefined ? never : T
 type Result = NonNullable<string | null | undefined>  // string
 ```
 
-## Template Literal Types
+## Типы шаблонных литералов
 
-Create types based on string manipulation:
+Создавайте типы на основе манипуляций со строками:
 
 ```typescript
 type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
 type Endpoint = '/users' | '/posts' | '/comments'
 
 type APIRoute = `${HTTPMethod} ${Endpoint}`
-// Result: 'GET /users' | 'GET /posts' | 'POST /users' | etc.
+// Результат: 'GET /users' | 'GET /posts' | 'POST /users' | и т.д.
 ```
 
 <Callout type="info">
-Template literal types are perfect for creating type-safe API routes and event names!
+Типы шаблонных литералов идеально подходят для создания типобезопасных маршрутов API и имён событий!
 </Callout>
 
-## Mapped Types
+## Отображаемые типы
 
-Transform existing types into new ones:
+Преобразование существующих типов в новые:
 
 ```typescript
 type Readonly<T> = {
@@ -105,9 +105,9 @@ type ReadonlyProduct = Readonly<Product>
 type NullableProduct = Nullable<Product>
 ```
 
-## Discriminated Unions
+## Размеченные объединения
 
-Create type-safe state machines:
+Создание типобезопасных конечных автоматов:
 
 ```typescript
 type LoadingState = {
@@ -129,22 +129,22 @@ type AsyncState<T> = LoadingState | SuccessState<T> | ErrorState
 function handleState(state: AsyncState<User>) {
   switch (state.status) {
     case 'loading':
-      return 'Loading...'
+      return 'Загрузка...'
     case 'success':
-      return `Welcome, ${state.data.name}!`
+      return `Добро пожаловать, ${state.data.name}!`
     case 'error':
-      return `Error: ${state.error}`
+      return `Ошибка: ${state.error}`
   }
 }
 ```
 
 <Callout type="success">
-TypeScript's exhaustiveness checking ensures you handle all cases!
+Проверка исчерпываемости TypeScript гарантирует, что вы обработаете все случаи!
 </Callout>
 
-## Generic Constraints
+## Ограничения обобщений
 
-Constrain generic types for better type safety:
+Ограничивайте обобщённые типы для лучшей типобезопасности:
 
 ```typescript
 interface HasId {
@@ -155,33 +155,33 @@ function getById<T extends HasId>(items: T[], id: number): T | undefined {
   return items.find(item => item.id === id)
 }
 
-// ✅ Works
-getById([{ id: 1, name: 'Alice' }], 1)
+// ✅ Работает
+getById([{ id: 1, name: 'Алиса' }], 1)
 
-// ❌ Error: object doesn't have 'id'
-// getById([{ name: 'Bob' }], 1)
+// ❌ Ошибка: объект не имеет 'id'
+// getById([{ name: 'Боб' }], 1)
 ```
 
-## Infer Keyword
+## Ключевое слово infer
 
-Extract types from other types:
+Извлечение типов из других типов:
 
 ```typescript
 type ReturnType<T> = T extends (...args: any[]) => infer R ? R : never
 
 function getUser() {
-  return { id: 1, name: 'Alice' }
+  return { id: 1, name: 'Алиса' }
 }
 
 type User = ReturnType<typeof getUser>  // { id: number; name: string }
 ```
 
 <Callout type="warning">
-The `infer` keyword is powerful but can make types harder to read. Use it judiciously!
+Ключевое слово `infer` мощное, но может сделать типы сложнее для чтения. Используйте его разумно!
 </Callout>
 
-## Conclusion
+## Заключение
 
-TypeScript's advanced type system enables you to write safer, more expressive code. By mastering these patterns, you'll catch more bugs at compile-time and improve your development experience.
+Продвинутая система типов TypeScript позволяет вам писать более безопасный и выразительный код. Освоив эти паттерны, вы будете отлавливать больше ошибок на этапе компиляции и улучшите свой опыт разработки.
 
-Keep exploring and happy typing! 💙
+Продолжайте исследовать и удачной типизации! 💙

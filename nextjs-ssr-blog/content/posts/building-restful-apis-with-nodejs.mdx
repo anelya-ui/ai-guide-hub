@@ -9,18 +9,18 @@ categories: ['Обучение', 'Backend']
 published: true
 ---
 
-## Why Node.js for APIs?
+## Почему Node.js для API?
 
-Node.js has become the go-to choice for building APIs due to its:
+Node.js стал предпочтительным выбором для создания API благодаря:
 
-- **Non-blocking I/O**: Perfect for handling multiple concurrent requests
-- **JavaScript everywhere**: Use the same language on frontend and backend
-- **Rich ecosystem**: NPM provides packages for almost everything
-- **Performance**: V8 engine makes it incredibly fast
+- **Неблокирующий I/O**: Идеально подходит для обработки множественных одновременных запросов
+- **JavaScript везде**: Используйте один и тот же язык на frontend и backend
+- **Богатая экосистема**: NPM предоставляет пакеты практически для всего
+- **Производительность**: Движок V8 делает его невероятно быстрым
 
-## Setting Up the Project
+## Настройка проекта
 
-Let's create a new Node.js project:
+Давайте создадим новый проект Node.js:
 
 ```bash
 mkdir my-api
@@ -31,12 +31,12 @@ npm install -D typescript @types/node @types/express ts-node nodemon
 ```
 
 <Callout type="info">
-We're using TypeScript for better type safety and developer experience.
+Мы используем TypeScript для лучшей типобезопасности и удобства разработки.
 </Callout>
 
-## Project Structure
+## Структура проекта
 
-Organize your project like this:
+Организуйте свой проект следующим образом:
 
 ```
 my-api/
@@ -50,7 +50,7 @@ my-api/
 └── tsconfig.json
 ```
 
-## Creating the Server
+## Создание сервера
 
 ```typescript
 // src/server.ts
@@ -78,29 +78,29 @@ app.listen(PORT, () => {
 })
 ```
 
-## REST Principles
+## Принципы REST
 
-A RESTful API follows these principles:
+RESTful API следует этим принципам:
 
-1. **Stateless**: Each request contains all necessary information
-2. **Resource-based**: URLs represent resources, not actions
-3. **HTTP methods**: Use GET, POST, PUT, DELETE appropriately
-4. **JSON**: Use JSON for request/response bodies
+1. **Без состояния**: Каждый запрос содержит всю необходимую информацию
+2. **Основан на ресурсах**: URL представляют ресурсы, а не действия
+3. **HTTP методы**: Правильно используйте GET, POST, PUT, DELETE
+4. **JSON**: Используйте JSON для тела запроса/ответа
 
-### HTTP Methods
+### HTTP методы
 
-| Method | Purpose | Example |
-|--------|---------|---------|
-| GET | Retrieve resources | `GET /api/users` |
-| POST | Create resources | `POST /api/users` |
-| PUT | Update resources | `PUT /api/users/1` |
-| DELETE | Delete resources | `DELETE /api/users/1` |
+| Метод | Назначение | Пример |
+|-------|-----------|---------|
+| GET | Получить ресурсы | `GET /api/users` |
+| POST | Создать ресурс | `POST /api/users` |
+| PUT | Обновить ресурс | `PUT /api/users/1` |
+| DELETE | Удалить ресурс | `DELETE /api/users/1` |
 
-<Callout type="warning" title="Idempotency">
-PUT and DELETE should be idempotent - calling them multiple times should have the same effect as calling once.
+<Callout type="warning" title="Идемпотентность">
+PUT и DELETE должны быть идемпотентными - многократный вызов должен иметь тот же эффект, что и однократный.
 </Callout>
 
-## Creating Routes
+## Создание маршрутов
 
 ```typescript
 // src/routes/users.ts
@@ -118,7 +118,7 @@ router.delete('/:id', deleteUser)
 export default router
 ```
 
-## Controller Pattern
+## Паттерн контроллера
 
 ```typescript
 // src/controllers/users.ts
@@ -126,11 +126,11 @@ import { Request, Response } from 'express'
 
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
-    // Fetch from database
+    // Получение из базы данных
     const users = await db.users.findMany()
     res.json({ data: users })
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' })
+    res.status(500).json({ error: 'Внутренняя ошибка сервера' })
   }
 }
 
@@ -141,12 +141,12 @@ export const createUser = async (req: Request, res: Response) => {
     })
     res.status(201).json({ data: user })
   } catch (error) {
-    res.status(400).json({ error: 'Invalid request' })
+    res.status(400).json({ error: 'Неверный запрос' })
   }
 }
 ```
 
-## Error Handling Middleware
+## Middleware для обработки ошибок
 
 ```typescript
 // src/middleware/errorHandler.ts
@@ -170,12 +170,12 @@ export const errorHandler = (
 ```
 
 <Callout type="success">
-Always use error handling middleware to catch unhandled errors gracefully!
+Всегда используйте middleware для обработки ошибок, чтобы корректно перехватывать необработанные ошибки!
 </Callout>
 
-## Validation
+## Валидация
 
-Use a validation library like Zod:
+Используйте библиотеку валидации, такую как Zod:
 
 ```typescript
 import { z } from 'zod'
@@ -193,28 +193,28 @@ export const createUser = async (req: Request, res: Response) => {
     return res.status(400).json({ error: result.error })
   }
 
-  // Create user with validated data
+  // Создание пользователя с валидированными данными
   const user = await db.users.create({ data: result.data })
   res.status(201).json({ data: user })
 }
 ```
 
-## Best Practices
+## Лучшие практики
 
-1. **Use environment variables** for configuration
-2. **Implement rate limiting** to prevent abuse
-3. **Add authentication** with JWT or OAuth
-4. **Document your API** with OpenAPI/Swagger
-5. **Version your API** (e.g., `/api/v1/users`)
-6. **Use HTTPS** in production
-7. **Log everything** for debugging
+1. **Используйте переменные окружения** для конфигурации
+2. **Реализуйте ограничение частоты запросов** для предотвращения злоупотреблений
+3. **Добавьте аутентификацию** с JWT или OAuth
+4. **Документируйте ваш API** с помощью OpenAPI/Swagger
+5. **Версионируйте ваш API** (например, `/api/v1/users`)
+6. **Используйте HTTPS** в продакшене
+7. **Логируйте всё** для отладки
 
 <Callout type="tip">
-Consider using API Gateway patterns for microservices architectures!
+Рассмотрите использование паттернов API Gateway для архитектур микросервисов!
 </Callout>
 
-## Conclusion
+## Заключение
 
-Building RESTful APIs with Node.js and Express is straightforward when you follow best practices. Focus on clear structure, error handling, and security to create production-ready APIs.
+Создание RESTful API с Node.js и Express — это просто, когда вы следуете лучшим практикам. Сосредоточьтесь на четкой структуре, обработке ошибок и безопасности для создания production-ready API.
 
-Happy coding! 🚀
+Удачного кодирования! 🚀

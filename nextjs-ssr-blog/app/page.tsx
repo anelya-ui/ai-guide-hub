@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { AIEfficiencyCalculator } from '@/components/calculator/ai-efficiency-calculator'
 import { AIFaq } from '@/components/faq/ai-faq'
 import { AnimatedCodeBackground } from '@/components/hero/animated-code-background'
+import { BookOpen, MessageSquare, Settings, Palette, Code, GraduationCap } from 'lucide-react'
 
 export const revalidate = 3600 // Revalidate every hour
 
@@ -37,7 +38,7 @@ export default async function Home() {
                 className="bg-gradient-to-r from-accent to-primary text-white font-semibold hover:opacity-90 shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
                 asChild
               >
-                <Link href="/blog">AI Гайды</Link>
+                <Link href="/guides">AI Гайды</Link>
               </Button>
             </div>
           </div>
@@ -47,61 +48,94 @@ export default async function Home() {
       {/* Features Section */}
       <section className="section-features py-12 -mt-12 relative z-[3]">
         <div className="container">
-          <h2 className="text-3xl font-bold text-center mb-12">Что вы найдёте</h2>
+          <h2 className="text-3xl font-bold text-center mb-4">Что вы найдёте</h2>
+          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+            Коллекция практических ресурсов для работы с искусственным интеллектом
+          </p>
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <Card>
-              <CardHeader>
-                <CardTitle>📚 Практические Гайды</CardTitle>
-                <CardDescription>
+            {/* Практические Гайды */}
+            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500/10 via-blue-400/5 to-transparent border border-blue-500/20 p-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-blue-500/20">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/20 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500" />
+              <div className="relative">
+                <BookOpen className="w-12 h-12 mb-4 text-blue-500" />
+                <h3 className="text-xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
+                  Практические Гайды
+                </h3>
+                <p className="text-sm text-muted-foreground">
                   Пошаговые инструкции по работе с AI-инструментами и технологиями
-                </CardDescription>
-              </CardHeader>
-            </Card>
+                </p>
+              </div>
+            </div>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>💬 AI Промпты</CardTitle>
-                <CardDescription>
+            {/* AI Промпты */}
+            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-500/10 via-purple-400/5 to-transparent border border-purple-500/20 p-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/20">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-500/20 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500" />
+              <div className="relative">
+                <MessageSquare className="w-12 h-12 mb-4 text-purple-500" />
+                <h3 className="text-xl font-bold mb-2 bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent">
+                  AI Промпты
+                </h3>
+                <p className="text-sm text-muted-foreground">
                   Готовые промпты для ChatGPT, Claude, Midjourney и других AI-сервисов
-                </CardDescription>
-              </CardHeader>
-            </Card>
+                </p>
+              </div>
+            </div>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>🛠️ Обзоры Инструментов</CardTitle>
-                <CardDescription>
+            {/* Обзоры Инструментов */}
+            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-green-500/10 via-green-400/5 to-transparent border border-green-500/20 p-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-green-500/20">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-500/20 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500" />
+              <div className="relative">
+                <Settings className="w-12 h-12 mb-4 text-green-500" />
+                <h3 className="text-xl font-bold mb-2 bg-gradient-to-r from-green-600 to-green-400 bg-clip-text text-transparent">
+                  Обзоры Инструментов
+                </h3>
+                <p className="text-sm text-muted-foreground">
                   Детальные обзоры и сравнения AI-инструментов для работы
-                </CardDescription>
-              </CardHeader>
-            </Card>
+                </p>
+              </div>
+            </div>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>🎯 Для Дизайнеров</CardTitle>
-                <CardDescription>
+            {/* Для Дизайнеров */}
+            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-pink-500/10 via-pink-400/5 to-transparent border border-pink-500/20 p-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-pink-500/20">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-pink-500/20 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500" />
+              <div className="relative">
+                <Palette className="w-12 h-12 mb-4 text-pink-500" />
+                <h3 className="text-xl font-bold mb-2 bg-gradient-to-r from-pink-600 to-pink-400 bg-clip-text text-transparent">
+                  Для Дизайнеров
+                </h3>
+                <p className="text-sm text-muted-foreground">
                   Специализированные ресурсы и инструменты для UI/UX дизайнеров
-                </CardDescription>
-              </CardHeader>
-            </Card>
+                </p>
+              </div>
+            </div>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>💻 Для Разработчиков</CardTitle>
-                <CardDescription>
+            {/* Для Разработчиков */}
+            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-orange-500/10 via-orange-400/5 to-transparent border border-orange-500/20 p-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-orange-500/20">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-orange-500/20 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500" />
+              <div className="relative">
+                <Code className="w-12 h-12 mb-4 text-orange-500" />
+                <h3 className="text-xl font-bold mb-2 bg-gradient-to-r from-orange-600 to-orange-400 bg-clip-text text-transparent">
+                  Для Разработчиков
+                </h3>
+                <p className="text-sm text-muted-foreground">
                   AI-помощники в программировании и автоматизации разработки
-                </CardDescription>
-              </CardHeader>
-            </Card>
+                </p>
+              </div>
+            </div>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>🎓 AI Обучение</CardTitle>
-                <CardDescription>
+            {/* AI Обучение */}
+            <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-cyan-500/10 via-cyan-400/5 to-transparent border border-cyan-500/20 p-6 transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/20">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-cyan-500/20 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500" />
+              <div className="relative">
+                <GraduationCap className="w-12 h-12 mb-4 text-cyan-500" />
+                <h3 className="text-xl font-bold mb-2 bg-gradient-to-r from-cyan-600 to-cyan-400 bg-clip-text text-transparent">
+                  AI Обучение
+                </h3>
+                <p className="text-sm text-muted-foreground">
                   Структурированные мини-курсы по изучению искусственного интеллекта
-                </CardDescription>
-              </CardHeader>
-            </Card>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>

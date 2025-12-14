@@ -9,17 +9,17 @@ categories: ['Обучение', 'CSS']
 published: true
 ---
 
-## Why TailwindCSS?
+## Почему TailwindCSS?
 
-TailwindCSS is a utility-first CSS framework that has revolutionized how we style web applications. Instead of writing custom CSS, you compose designs using utility classes.
+TailwindCSS — это CSS-фреймворк, ориентированный на утилиты, который революционизировал подход к стилизации веб-приложений. Вместо написания пользовательского CSS, вы создаёте дизайн, используя утилитарные классы.
 
 <Callout type="success">
-Tailwind's utility-first approach leads to smaller CSS bundles and faster development!
+Подход TailwindCSS, ориентированный на утилиты, приводит к меньшим CSS-бандлам и более быстрой разработке!
 </Callout>
 
-## Configuration
+## Конфигурация
 
-Start with a solid `tailwind.config.ts`:
+Начните с надёжного `tailwind.config.ts`:
 
 ```typescript
 import type { Config } from 'tailwindcss'
@@ -49,23 +49,23 @@ export default config
 ```
 
 <Callout type="tip">
-Extend the theme, don't override it! This keeps all default utilities available.
+Расширяйте тему, а не переопределяйте её! Это сохраняет доступность всех утилит по умолчанию.
 </Callout>
 
-## Component Patterns
+## Паттерны компонентов
 
-### Extract Components, Not Classes
+### Извлекайте компоненты, а не классы
 
-**❌ Don't do this:**
+**❌ Не делайте так:**
 
 ```tsx
-// Repeating classes everywhere
+// Повторение классов везде
 <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
-  Click me
+  Нажми меня
 </button>
 ```
 
-**✅ Do this instead:**
+**✅ Делайте так:**
 
 ```tsx
 // components/Button.tsx
@@ -81,12 +81,12 @@ export function Button({ children, ...props }) {
 }
 ```
 
-## Using @apply Sparingly
+## Используйте @apply экономно
 
-The `@apply` directive can be useful, but use it sparingly:
+Директива `@apply` может быть полезна, но используйте её экономно:
 
 ```css
-/* Only for complex, repeated patterns */
+/* Только для сложных, повторяющихся паттернов */
 .btn {
   @apply px-4 py-2 rounded font-semibold transition-colors;
 }
@@ -97,50 +97,50 @@ The `@apply` directive can be useful, but use it sparingly:
 ```
 
 <Callout type="warning">
-Overusing `@apply` defeats the purpose of utility-first CSS. Prefer components!
+Чрезмерное использование `@apply` противоречит идее утилитарного CSS. Предпочитайте компоненты!
 </Callout>
 
-## Responsive Design
+## Адаптивный дизайн
 
-Tailwind's responsive utilities are incredibly powerful:
+Адаптивные утилиты Tailwind невероятно мощные:
 
 ```tsx
 <div className="
   grid
-  grid-cols-1        // Mobile: 1 column
-  md:grid-cols-2     // Tablet: 2 columns
-  lg:grid-cols-3     // Desktop: 3 columns
-  gap-4 md:gap-6     // Responsive gap
+  grid-cols-1        // Мобильные: 1 столбец
+  md:grid-cols-2     // Планшеты: 2 столбца
+  lg:grid-cols-3     // Десктоп: 3 столбца
+  gap-4 md:gap-6     // Адаптивный промежуток
 ">
-  {/* Content */}
+  {/* Контент */}
 </div>
 ```
 
-### Mobile-First Approach
+### Подход Mobile-First
 
 ```tsx
 <h1 className="
-  text-2xl     // Mobile base
-  md:text-4xl  // Tablet and up
-  lg:text-6xl  // Desktop and up
+  text-2xl     // Базовый мобильный
+  md:text-4xl  // Планшеты и выше
+  lg:text-6xl  // Десктоп и выше
 ">
-  Responsive Heading
+  Адаптивный заголовок
 </h1>
 ```
 
-## Dark Mode
+## Тёмная тема
 
-Enable dark mode in your config:
+Включите тёмную тему в вашей конфигурации:
 
 ```typescript
 // tailwind.config.ts
 export default {
-  darkMode: 'class', // or 'media'
+  darkMode: 'class', // или 'media'
   // ...
 }
 ```
 
-Then use dark mode variants:
+Затем используйте варианты тёмной темы:
 
 ```tsx
 <div className="
@@ -148,17 +148,17 @@ Then use dark mode variants:
   text-gray-900 dark:text-white
   border border-gray-200 dark:border-gray-700
 ">
-  Content adapts to theme!
+  Контент адаптируется к теме!
 </div>
 ```
 
 <Callout type="info">
-Use `class` strategy for manual theme switching, `media` for system preference.
+Используйте стратегию `class` для ручного переключения темы, `media` для системных предпочтений.
 </Callout>
 
-## State Variants
+## Варианты состояний
 
-Style based on state:
+Стилизация на основе состояния:
 
 ```tsx
 <button className="
@@ -168,13 +168,13 @@ Style based on state:
   active:bg-blue-700
   disabled:opacity-50 disabled:cursor-not-allowed
 ">
-  Interactive Button
+  Интерактивная кнопка
 </button>
 ```
 
-## Custom Utilities
+## Пользовательские утилиты
 
-Add your own utilities when needed:
+Добавляйте свои собственные утилиты при необходимости:
 
 ```css
 /* globals.css */
@@ -194,9 +194,9 @@ Add your own utilities when needed:
 }
 ```
 
-## Arbitrary Values
+## Произвольные значения
 
-Use square brackets for one-off values:
+Используйте квадратные скобки для одноразовых значений:
 
 ```tsx
 <div className="
@@ -204,19 +204,19 @@ Use square brackets for one-off values:
   bg-[#1da1f2]
   grid-cols-[200px_1fr_300px]
 ">
-  Arbitrary values for unique cases
+  Произвольные значения для уникальных случаев
 </div>
 ```
 
 <Callout type="warning">
-Use arbitrary values sparingly - they're best for truly unique cases.
+Используйте произвольные значения экономно - они лучше всего подходят для действительно уникальных случаев.
 </Callout>
 
-## Performance Optimization
+## Оптимизация производительности
 
-### PurgeCSS (Built-in)
+### PurgeCSS (Встроенный)
 
-Tailwind automatically removes unused styles in production:
+Tailwind автоматически удаляет неиспользуемые стили в продакшене:
 
 ```typescript
 // tailwind.config.ts
@@ -224,40 +224,40 @@ export default {
   content: [
     './src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
-  // Tailwind will only include classes used in these files
+  // Tailwind будет включать только классы, используемые в этих файлах
 }
 ```
 
-### JIT Mode
+### JIT режим
 
-Just-In-Time mode is enabled by default in Tailwind 3+:
+Just-In-Time режим включён по умолчанию в Tailwind 3+:
 
-- Generate styles on-demand
-- Faster build times
-- Smaller development builds
+- Генерация стилей по требованию
+- Более быстрое время сборки
+- Меньшие сборки для разработки
 
-## Organization Tips
+## Советы по организации
 
-### Group Related Utilities
+### Группируйте связанные утилиты
 
 ```tsx
 <div className={`
-  /* Layout */
+  /* Макет */
   flex items-center justify-between
-  /* Spacing */
+  /* Отступы */
   px-4 py-2 gap-2
-  /* Appearance */
+  /* Внешний вид */
   bg-white border border-gray-200 rounded-lg shadow-sm
-  /* Typography */
+  /* Типографика */
   text-sm font-medium text-gray-900
-  /* Interactive */
+  /* Интерактивность */
   hover:shadow-md transition-shadow
 `}>
-  Content
+  Контент
 </div>
 ```
 
-### Use clsx or cn Helper
+### Используйте clsx или cn помощник
 
 ```tsx
 import { clsx } from 'clsx'
@@ -267,19 +267,19 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-// Usage
+// Использование
 <button className={cn(
   'px-4 py-2',
   isActive && 'bg-blue-500',
   isDisabled && 'opacity-50 cursor-not-allowed'
 )}>
-  Smart Button
+  Умная кнопка
 </button>
 ```
 
-## Common Patterns
+## Распространённые паттерны
 
-### Card Component
+### Компонент карточки
 
 ```tsx
 export function Card({ children, className, ...props }) {
@@ -297,17 +297,17 @@ export function Card({ children, className, ...props }) {
 }
 ```
 
-### Container
+### Контейнер
 
 ```tsx
 <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-  {/* Centered, responsive container */}
+  {/* Центрированный, адаптивный контейнер */}
 </div>
 ```
 
-## Plugins
+## Плагины
 
-Enhance Tailwind with official plugins:
+Расширьте Tailwind официальными плагинами:
 
 ```bash
 npm install -D @tailwindcss/typography @tailwindcss/forms @tailwindcss/aspect-ratio
@@ -324,11 +324,11 @@ export default {
 ```
 
 <Callout type="success">
-The Typography plugin is essential for styling MDX content!
+Плагин Typography необходим для стилизации MDX контента!
 </Callout>
 
-## Conclusion
+## Заключение
 
-TailwindCSS is powerful when used correctly. Focus on component extraction, use responsive utilities liberally, and don't fight the framework. Your CSS will be smaller and your development faster.
+TailwindCSS мощный инструмент при правильном использовании. Сосредоточьтесь на извлечении компонентов, активно используйте адаптивные утилиты и не боритесь с фреймворком. Ваш CSS будет меньше, а разработка быстрее.
 
-Happy styling! 🎨
+Удачной стилизации! 🎨
